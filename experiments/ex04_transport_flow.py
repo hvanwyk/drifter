@@ -55,7 +55,7 @@ K   = Function(1, 'constant')  # permeability
 # Mesh and Elements
 # =============================================================================
 # Finite element mesh
-mesh = Mesh.newmesh(grid_size=(20,20))
+mesh = Mesh(grid_size=(20,20))
 mesh.refine()
  
 p_element = QuadFE(2,'Q2')  # element for pressure
