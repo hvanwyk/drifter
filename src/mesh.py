@@ -341,7 +341,7 @@ class Mesh(object):
                 v_bnd = []
                 for k in i_vbnd:
                     v_bnd.append( \
-                        grid.points['coordinates'][i_vbnd[k]].coordinate())
+                        grid.points['coordinates'][k].coordinate())
                 v_bnd = np.array(v_bnd) 
                 x_min, x_max = v_bnd[:,0].min(), v_bnd[:,0].max()
                 y_min, y_max = v_bnd[:,1].min(), v_bnd[:,1].max()
@@ -4897,7 +4897,17 @@ class QuadCell(Cell):
         #
         self._is_rectangle = is_rectangle
     
-    
+    def box(self):
+        """
+        Return the corner vertices x0, x1, y0, y1
+        """
+        V = self.get_vertices(pos='corners', as_array=True)
+        x0 = np.min(V[:,0])
+        x1 = np.max(V[:,0])
+        y0 = np.min(V[:,1])
+        y1 = np.max(V[:,1])
+        return x0,x1,y0,y1
+        
     def area(self):
         """
         Compute the area of the quadcell

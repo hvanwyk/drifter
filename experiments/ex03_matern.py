@@ -13,9 +13,9 @@ implementation and effect of
 """
 
 # Import 
-from mesh import Mesh
+from mesh import Mesh, Grid
 from fem import QuadFE, System, DofHandler, Function, GaussRule
-from gmrf import Gmrf, matern_precision
+from gmrf import Gmrf
 from plot import Plot
 import matplotlib.pyplot as plt
 import numpy as np
@@ -28,9 +28,8 @@ def test01():
     Condition on coarse realization
     """
     print('Test 1:')
-
-    mesh = Mesh.newmesh([0,20,0,20], grid_size=(10,10))
-    mesh.refine()
+    grid = Grid(box = [0,20,0,20], resolution=(10,10))
+    mesh = Mesh(grid=grid)
     mesh.record(flag=0)
     for _ in range(3):
         mesh.refine()
@@ -66,6 +65,10 @@ def test01():
     
     print('plotting')
     plot = Plot()
+    
+    fig, ax = plt.subplots(1,1)
+    ax = plot.contour(ax, fig, fX, mesh, element, flag=1)
+    fig.savefig('/home/hans-werner/Dropbox/work/presentations/2018_02_23/fig/anisotropic.pdf', bbox_inches='tight')
     fig, ax = plt.subplots(2,2)
     ax[0][0] = plot.mesh(ax[0][0], mesh, element,node_flag=0)
     ax[0][1] = plot.mesh(ax[0][1], mesh, element,node_flag=1)
@@ -82,8 +85,8 @@ def test02():
     Spatially varying anisotropy
     """
     print('Test 2:')
-
-    mesh = Mesh.newmesh([0,20,0,20], grid_size=(100,100))
+    grid = Grid(box=[0,20,0,20], resolution=(100,100))
+    mesh = Mesh(grid=grid)
     mesh.refine()
     element = QuadFE(2,'Q1')
     system = System(mesh, element)
@@ -155,5 +158,5 @@ def test04():
 
 if __name__ == '__main__':
     test01()
-    test02()
-    test03()
+    #test02()
+    #test03()

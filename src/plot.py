@@ -62,9 +62,7 @@ class Plot(object):
             #
             # Two dimensional mesh
             # 
-            v_cnr = node.cell().get_vertices(pos='corners', as_array=True)            
-            x0, x1 = v_cnr[:,0].min(), v_cnr[:,0].max()
-            y0, y1 = v_cnr[:,0].min(), v_cnr[:,0].max()
+            x0,x1,y0,y1 = mesh.bounding_box()
         
             
         hx = x1 - x0

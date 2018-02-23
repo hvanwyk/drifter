@@ -3558,8 +3558,8 @@ class System(object):
         #
         # Initialize
         # 
-        n_coarse =  self.__dofhandler.n_dofs(marker_coarse)
-        n_fine = self.dofhandler().n_dofs(marker_fine)
+        n_coarse =  self.dofhandler.n_dofs(marker_coarse)
+        n_fine = self.dofhandler.n_dofs(marker_fine)
         if u_coarse is None:
             #
             # Initialize sparse matrix
@@ -3579,9 +3579,9 @@ class System(object):
         for node in self.__mesh.root_node().get_leaves(marker_fine):
             if node.has_parent(marker_coarse):
                 parent = node.get_parent(marker_coarse)
-                node_dofs = self.__dofhandler.get_global_dofs(node)
-                parent_dofs = self.__dofhandler.get_global_dofs(parent)
-                x = self.__dofhandler.dof_vertices(node)
+                node_dofs = self.dofhandler.get_global_dofs(node)
+                parent_dofs = self.dofhandler.get_global_dofs(parent)
+                x = self.dofhandler.dof_vertices(node)
                 phi = self.shape_eval(cell=parent.cell(), x=x)
                 if u_coarse is not None:
                     #
